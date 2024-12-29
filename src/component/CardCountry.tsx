@@ -19,7 +19,7 @@ const CardCountry: React.FC<CardCountryProps> = ({ country }) => {
       <img
         src={flags.png}
         alt={name.common}
-        className="object-cover w-full h-32 rounded-md"
+        className="object-cover w-full rounded-md h-44"
       />
       <h2 className="mt-2 text-lg font-bold">{name.common}</h2>
       <p className="text-sm">Population: {population.toLocaleString()}</p>

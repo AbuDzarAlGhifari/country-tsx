@@ -15,4 +15,12 @@ export interface Country {
   subregion: string;
   languages: Record<string, string>;
   currencies: Record<string, { name: string; symbol: string }>;
+  timezones;
+  latlng;
+  demonym;
+  tld;
+  gdp;
+  government;
+  anthem;
+  climate;
 }

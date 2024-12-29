@@ -7,6 +7,7 @@ import ModalDetail from '../component/ModalDetail';
 import SearchBar from '../component/SearchBar';
 import Filter from '../component/Filter';
 import SkeletonCard from '../component/SkeletonCard';
+import { MdArrowUpward } from 'react-icons/md';
 
 const Home: React.FC = () => {
   const [countries, setCountries] = useState<Country[]>([]);
@@ -17,6 +18,7 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [visibleCount, setVisibleCount] = useState<number>(12);
+  const [showScrollUp, setShowScrollUp] = useState<boolean>(false);
 
   useEffect(() => {
     const getCountries = async () => {
@@ -34,6 +36,12 @@ const Home: React.FC = () => {
   }, [visibleCount, countries]);
 
   const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setShowScrollUp(true);
+    } else {
+      setShowScrollUp(false);
+    }
+
     if (
       window.innerHeight + document.documentElement.scrollTop >=
       document.documentElement.offsetHeight - 50
@@ -63,9 +71,13 @@ const Home: React.FC = () => {
     setSelectedCountry(null);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="p-4">
-      <div className="flex flex-col justify-between mb-4 sm:flex-row">
+      <div className="flex flex-col justify-between gap-2 mb-4 sm:flex-row">
         <SearchBar search={search} onSearchChange={setSearch} />
         <Filter region={region} onRegionChange={setRegion} />
       </div>
@@ -119,6 +131,15 @@ const Home: React.FC = () => {
 
       {selectedCountry && (
         <ModalDetail country={selectedCountry} onClose={closeModal} />
+      )}
+
+      {showScrollUp && (
+        <button
+          onClick={scrollToTop}
+          className="fixed p-3 text-white transition bg-gray-700 rounded-full shadow-lg bottom-10 right-10"
+        >
+          <MdArrowUpward size={24} />
+        </button>
       )}
     </div>
   );
